@@ -6,7 +6,7 @@ const auth = require("../../middlewares/authMiddleware");
 const controller = require("../../controllers/auth");
 const uploadFile = require("../../middlewares/uploadFiles");
 
-router.post("/", wrapper(auth), controllers.addMyPet);
+router.post("/add-my-pet", wrapper(auth), controllers.addMyPet);
 router.get("/pets", wrapper(auth), controllers.getListPets);
 router.get("/current", wrapper(auth), controllers.getInfo);
 router.post("/logout", wrapper(auth), controller.logout);
