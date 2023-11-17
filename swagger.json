@@ -1,0 +1,539 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger for pets",
+    "description": "Showing off swagger-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https://pet-web-server.onrender.com" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "User",
+      "description": "User endpoints"
+    },
+    {
+      "name": "Pets",
+      "description": "All pets endpoints"
+    }
+  ],
+  "paths": {
+    "/api/auth/reqistration": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "No Authorization",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/user/add-my-pet": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Add your pet",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "pet object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful added pet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addPetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request ",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/user/pets": {
+      "get": {
+        "tags": ["User"],
+        "summary": "List your pets",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful list pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listPetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request ",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "id object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/logoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful logout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/logoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request ",
+            "content": {}
+          }
+        }
+      }
+    },
+    "api/pets": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "List all pets on database",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listAllPets"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "api/pets/:id": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "List all pets on database",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "User's id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/listAllPets"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "confirmPassword"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "format": "email",
+            "example": "Godrik"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's id"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        },
+        "example": [
+          {
+            "email": "godrik999@gmail.com",
+            "id": "8976asdf897asd02798hc73jnh"
+          }
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's id"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        },
+        "example": [
+          {
+            "email": "godrik999@gmail.com",
+            "id": "8976asdf897asd02798hc73jnh"
+          }
+        ]
+      },
+      "addPetRequest": {
+        "type": "object",
+        "required": ["name", "birthday", "type", "comments"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "format": "name",
+            "example": "Barsik"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "Pet's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "example": "Sheepdog"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        }
+      },
+      "addPetResponse": {
+        "type": "object",
+        "required": ["name", "birthday", "type", "comments"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Pet's name",
+            "format": "string",
+            "example": "kujnsd87hsd9232n3d3d2"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "format": "name",
+            "example": "Barsik"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "Pet's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "example": "Sheepdog"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        }
+      },
+      "listPetResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Pet's name",
+              "format": "name",
+              "example": "Barsik"
+            },
+            "birthday": {
+              "type": "number",
+              "description": "Pet's birthday",
+              "format": "number",
+              "example": "11.12.2020"
+            },
+            "type": {
+              "type": "string",
+              "description": "Pet's type",
+              "example": "Sheepdog"
+            },
+            "comments": {
+              "type": "string",
+              "description": "Comments about your pet ",
+              "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+            }
+          }
+        },
+        "example": [
+          {
+            "id": "8976asdf897asd02798hc73jnh",
+            "name": "Jack",
+            "birthday": "03.04.2021",
+            "type": "Persian cat",
+            "comments": " Jack is a gray Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys. Although a bit shy, he's a loyal and affectionate lap cat."
+          },
+          {
+            "id": "0909kwe0-v9k23pioklimvadsfa",
+            "name": "Barsik",
+            "birthday": "11.12.2020",
+            "type": "Sheepdog",
+            "comments": " Barsik is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play"
+          }
+        ]
+      },
+      "logoutRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's id"
+          }
+        },
+        "example": {
+          "id": "8976asdf897asd02798hc73jnh"
+        }
+      },
+      "logoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "message"
+          }
+        },
+        "example": {
+          "message": "you have exited successfully"
+        }
+      },
+      "listAllPets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "id",
+              "format": "name",
+              "example": "rtfg4343t434g334ggg34a43"
+            },
+            "name": {
+              "type": "string",
+              "description": "Pet's name",
+              "format": "name",
+              "example": "Barsik"
+            },
+            "birthday": {
+              "type": "number",
+              "description": "Pet's birthday",
+              "format": "number",
+              "example": "11.12.2020"
+            },
+            "type": {
+              "type": "string",
+              "description": "Pet's type",
+              "example": "Sheepdog"
+            },
+            "comments": {
+              "type": "string",
+              "description": "Comments about your pet ",
+              "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+            }
+          }
+        },
+        "example": [
+          {
+            "id": "8976asdf897asd02798hc73jnh",
+            "name": "Jack",
+            "birthday": "03.04.2021",
+            "type": "Persian cat",
+            "comments": " Jack is a gray Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys. Although a bit shy, he's a loyal and affectionate lap cat."
+          },
+          {
+            "id": "0909kwe0-v9k23pioklimvadsfa",
+            "name": "Barsik",
+            "birthday": "11.12.2020",
+            "type": "Sheepdog",
+            "comments": " Barsik is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play"
+          }
+        ]
+      }
+    },
+
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

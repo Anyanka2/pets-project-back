@@ -12,3 +12,12 @@ router.get("/verify/:verificationToken", wrapper(controller.verifyEmail));
 router.post("/verify", wrapper(controller.resendVerifyEmail));
 
 module.exports = router;
+
+
+
+//  "securitySchemes": {
+//       "Bearer": {
+//         "type": "http",
+//         "scheme": "bearer",
+//         "bearerFormat": "JWT"
+//       }
