@@ -20,17 +20,18 @@ const noticeSchema = Schema(
         type: {
             type: String,
         },
-        place: {
+        location: {
             type: String,
-            required: [true, "Place is required"],
         },
         sex: {
             type: String,
-            required: [true, "Email is required"],
+        },
+        phone: {
+            type: String,
         },
         email: {
             type: String,
-            required: [true, "Phone is required"],
+            required: [true, "Email is required"],
         },
         comments: {
             type: String,

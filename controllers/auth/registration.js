@@ -24,21 +24,20 @@ const registration = async (req, res, next) => {
         // verificationToken,
     });
 
-    const verifyEmail = {
-      to: email,
-      subject: "Verify email",
-      html: `<a target="_blank" href="http://localhost:3000/api/auth/verify/${verificationToken}" >Click verify email</a>`,
-    };
+    // const verifyEmail = {
+    //   to: email,
+    //   subject: "Verify email",
+    //   html: `<a target="_blank" href="http://localhost:3000/api/auth/verify/${verificationToken}" >Click verify email</a>`,
+    // };
     // await sendEmail(verifyEmail);
 
     res.status(201).json({
-        user: {
-            email: newUser.email,
-            subscription: newUser.subscription,
-            id: newUser._id,
-            avatarURL: newUser.avatarURL,
-            // verificationToken,
-        },
+      user: {
+        email: newUser.email,
+        name: newUser.name,
+        id: newUser._id,
+        // verificationToken,
+      },
     });
 };
 
