@@ -33,8 +33,11 @@ const petsSchema = Schema(
     user_phone: {
       type: String,
     },
-    place: {
+    location: {
       type: String,
+    },
+    price: {
+      type: Number,
     },
     // photoURL: {
     //   type: String,
