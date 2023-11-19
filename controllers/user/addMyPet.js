@@ -4,9 +4,10 @@ const addMyPet = async (req, res, next) => {
 
   try {
 
-     const { id: owner, email } = req.user;
-     console.log(email)
-     const { name, birthday, type, comments, filter } = req.body;
+     const { id: owner, email, user_phone: phone } = req.user;
+     
+     const { name, birthday, type, comments, filter, location, price } =
+       req.body;
 
      const resolve = await Pets.create({
        name,
@@ -14,8 +15,11 @@ const addMyPet = async (req, res, next) => {
        type,
        comments,
        filter,
+       price,
        owner,
+       user_phone: phone,
        user_email: email,
+       location,
      });
 
      return res.status(201).json(resolve);
