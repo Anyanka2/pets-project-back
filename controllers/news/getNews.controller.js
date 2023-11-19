@@ -7,15 +7,16 @@ async function getNews(req, res, next) {
     const total = await News.countDocuments();
     const totalPages = Math.ceil(total / limit);
 
-    const resurses = await News.find()
+    const resourses = await News.find()
                         .skip((offset - 1) * limit )
                         .limit(limit)
                         .exec();
     
-    res.json({"status": "ok",
-             "code": 200,
-             "data": {
-                resurses,
+    res.json({
+            "status": "ok",
+            "code": 200,
+            "data": {
+                resourses,
                 total,
                 totalPages
             }});

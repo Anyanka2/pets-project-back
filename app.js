@@ -22,7 +22,7 @@ app.use("/api/pets", petsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/find_pet", userRouter);
-app.use("/news", newsRouter);
+app.use("/api/news", newsRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
