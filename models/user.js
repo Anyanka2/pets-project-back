@@ -1,39 +1,51 @@
-const { Schema, model, Types } = require("mongoose");
+const {Schema, model, Types} = require("mongoose");
+const path = require('path');
 
 const userSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
+    {
+        name: {
+            type: String,
+            required: [true, "Name is required"],
+        },
+        email: {
+            type: String,
+            required: [true, "Email is required"],
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: [true, "Set password for user"],
+        },
+        avatarURL: {
+            type: String,
+            default: path.join(__dirname, '/public/avatar/default_avatar.png'),
+        },
+        birthday: {
+            type: Date,
+        },
+        city: {
+            type: String,
+        },
+        phone: {
+            type: String,
+        },
+        token: {
+            type: String,
+            default: null,
+        },
+        verify: {
+            type: Boolean,
+            default: false,
+        },
+        verificationToken: {
+            type: String,
+            // required: [true, "Verify token is required"],
+        },
     },
-    password: {
-      type: String,
-      required: [true, "Set password for user"],
-    },
-    subscription: {
-      type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter",
-    },
-    token: {
-      type: String,
-      default: null,
-    },
-    avatarURL: String,
-    verify: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: {
-      type: String,
-      required: [true, "Verify token is required"],
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+    {
+        timestamps: true,
+        versionKey: false,
+    }
 );
 
 const User = model("user", userSchema);

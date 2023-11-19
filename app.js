@@ -20,6 +20,7 @@ app.use(express.json());
 app.use("/api/pets", petsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/find_pet", userRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
