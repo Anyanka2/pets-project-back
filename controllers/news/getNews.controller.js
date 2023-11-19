@@ -1,10 +1,24 @@
 const News = require("../../models/news.model.js");
-const collection = require("../../tmp/allArticles.json");
 
 async function getNews(req, res, next) {
+
+    const offset = parseInt(req.query.offset) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const total = await News.countDocuments();
+    const totalPages = Math.ceil(total / limit);
+
+    const resurses = await News.find()
+                        .skip((offset - 1) * limit )
+                        .limit(limit)
+                        .exec();
     
-    // console.log(collection);
-    res.json({"message": "ok"});
+    res.json({"status": "ok",
+             "code": 200,
+             "data": {
+                resurses,
+                total,
+                totalPages
+            }});
 }
 
 module.exports = getNews;
