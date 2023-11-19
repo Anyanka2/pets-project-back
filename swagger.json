@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https://pet-web-server.onrender.com" }],
+  "servers": [{ "url": "https://pet-web-server.onrender.com" }, {"url":"http://localhost:3030/"}],
   "tags": [
     {
       "name": "Auth",
@@ -24,6 +24,10 @@
     {
       "name": "Pets",
       "description": "All pets endpoints"
+    },
+    {
+      "name": "Other",
+      "description": "Public routes like news and sponsors"
     }
   ],
   "paths": {
@@ -252,6 +256,45 @@
           }
         }
       }
+    },
+    "api/news": {
+      "get":{
+        "tags":["Other"],
+        "summary": "Return list of news about pets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The page number",
+            "requred": false,
+            "type": "number",
+            "example": 1,
+            "default": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "The number of items",
+            "requred": false,
+            "type": "number",
+            "example": 10,
+            "default": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful fetch news",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref": "#/components/schemas/newsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+      
     }
   },
 
@@ -259,7 +302,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["name", "email", "password", "confirmPassword"],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -274,11 +317,6 @@
             "example": "godrik999@gmail.com"
           },
           "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
-          },
-          "confirmPassword": {
             "type": "string",
             "description": "User's password",
             "example": "qwerty123"
@@ -344,7 +382,7 @@
       },
       "addPetRequest": {
         "type": "object",
-        "required": ["name", "birthday", "type", "comments"],
+        "required": ["name", "birthday", "type", "comments", "location", "price", "filter"],
         "properties": {
           "name": {
             "type": "string",
@@ -367,6 +405,24 @@
             "type": "string",
             "description": "Comments about your pet ",
             "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          },
+          "location": {
+            "type": "string",
+            "description": "Pet's location",
+            "format": "string",
+            "example": "Lviv"
+          },
+          "price": {
+            "type": "number",
+            "description": "Pet's price",
+            "format": "number",
+            "example": 21312
+          },
+          "filter": {
+            "type": "string",
+            "description": "sell, lost/found, in good hands, found",
+            "format": "string",
+            "example": "sell"
           }
         }
       },
@@ -525,6 +581,118 @@
             "comments": " Barsik is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play"
           }
         ]
+      },
+      "newsResponse":{
+        "type": "object",
+        "properties":{
+          "status":{
+            "type": "string",
+            "description": "Status query",
+            "format":"string",
+            "example": "ok"
+          },
+          "code":{
+            "type":"number",
+            "description": "duplicate response code",
+            "format": "number",
+            "example": 200
+          },
+          "data": {
+            "type":"object",
+            "properties": {
+              "resourses": {
+                "type": "array",
+                "items":{
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "news id",
+                      "format": "name",
+                      "example": "655a08473e09b17fe5eeed27"
+                    },
+                    "imgUrl": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    },  
+                    "date": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    }, 
+                    "url": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    }, 
+                    "nytID": {
+                      "type": "string",
+                      "description": "Pet's name",
+                      "format": "name",
+                      "example": "Barsik"
+                    }
+                  }
+                }
+              },
+              "total": {
+                "type": "number",
+                "example": 123
+              },
+              "totalPages": {
+                "type": "number",
+                "example": 23213
+              }
+            }
+          }
+        },
+        "example": {
+          "status": "ok",
+          "code": 200,
+          "data": {
+              "resourses": [
+                  {
+                      "_id": "655a08473e09b17fe5eeed27",
+                      "imgUrl": "https://www.nytimes.com/images/2023/04/16/magazine/16mag-LOR/16mag-LOR-blog480.jpg",
+                      "title": "What I Learned Dogsitting for New York City’s Opulent Elite",
+                      "text": "In a city of yawning class inequality, some side hustles let you glimpse how the other half lives.",
+                      "date": "2023-04-11T09:00:18.000Z",
+                      "url": "https://www.nytimes.com/2023/04/11/magazine/dogsitting-rich-new-york.html",
+                      "nytID": "nyt://article/8d29f1fc-d146-509d-8ceb-5a5b17d7886b",
+                      "createdAt": "2023-11-19T13:06:16.190Z",
+                      "updatedAt": "2023-11-19T13:06:16.190Z"
+                  },
+                  {
+                      "_id": "655a08473e09b17fe5eeed28",
+                      "imgUrl": "https://www.nytimes.com/images/2023/04/04/multimedia/00VIRTUAL-VETS-01b-fmzk/00VIRTUAL-VETS-01b-fmzk-blog480.jpg",
+                      "title": "The Virtual Vet Will See You Meow",
+                      "text": "Veterinary telemedicine could help more pet owners access much-needed care and put anxious animals at ease, but challenges remain.",
+                      "date": "2023-04-07T09:00:46.000Z",
+                      "url": "https://www.nytimes.com/2023/04/07/health/vet-pet-health-telemedicine.html",
+                      "nytID": "nyt://article/992f2f7f-793c-5553-b722-348625f53a4b",
+                      "createdAt": "2023-11-19T13:06:16.191Z",
+                      "updatedAt": "2023-11-19T13:06:16.191Z"
+                  }
+              ],
+              "total": 1151,
+              "totalPages": 116
+          }
+        }
       }
     },
 
