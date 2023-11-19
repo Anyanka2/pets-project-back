@@ -8,7 +8,7 @@ const swaggerDocument = require("./swagger.json");
 const petsRouter = require("./routes/api/pets");
 const authRouter = require("./routes/api/auth");
 const userRouter = require("./routes/api/user");
-const noticesController = require("./routes/api/notices")
+const noticesRouter = require("./routes/api/notices")
 const newsRouter = require("./routes/api/news.router");
 
 const app = express();
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use("/api/pets", petsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
-app.use("/api/find_pet", noticesController);
+app.use("/api/find_pet", noticesRouter);
 app.use("/api/news", newsRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
