@@ -8,7 +8,7 @@ const uploadFile = require("../../middlewares/uploadFiles");
 
 router.post("/add-my-pet", wrapper(auth), controllers.addMyPet);
 router.get("/pets", wrapper(auth), controllers.getListPets);
-router.get("/current", wrapper(auth), controllers.getInfo);
+router.get("/current",  controllers.getInfo);
 router.post("/logout", wrapper(auth), controller.logout);
 router.patch("/avatar", uploadFile.single("avatar"), controllers.uploadImage);
 module.exports = router;
