@@ -1,11 +1,30 @@
-const User = require("../../models/user");
-// fix this request
-const addMyPet = async (req, res, next) => {
-  const { user } = req;
-  const { id } = req.body;
-  user.pets.push(id);
+const Pets = require("../../models/pet");
 
-  await User.findByIdAndUpdate(user.id, user);
-  res.status(200).json({ pets: user.books });
+const addMyPet = async (req, res, next) => {
+
+  try {
+
+     const { id: owner, email } = req.user;
+     console.log(email)
+     const { name, birthday, type, comments, filter } = req.body;
+
+     const resolve = await Pets.create({
+       name,
+       birthday,
+       type,
+       comments,
+       filter,
+       owner,
+       user_email: email,
+     });
+
+     return res.status(201).json(resolve);
+
+  } catch (error) {
+    next(error);
+  }
+ return res.status(201).json(resolve);
 };
+
 module.exports = addMyPet;
+
