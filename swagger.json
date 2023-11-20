@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.1",
+    "version": "0.1.10",
     "title": "Swagger for pets",
     "description": "Showing off swagger-ui-express",
     "license": {
@@ -28,10 +28,14 @@
     {
       "name": "Other",
       "description": "Public routes like news and sponsors"
+    },
+    {
+      "name": "Notices",
+      "description": "Public routes with notices and info about sell, find, and so on"
     }
   ],
   "paths": {
-    "/api/auth/reqistration": {
+    "/api/auth/registration": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -107,30 +111,30 @@
         }
       }
     },
-    "/api/user/add-my-pet": {
+    "/api/auth/logout": {
       "post": {
-        "tags": ["User"],
-        "summary": "Add your pet",
+        "tags": ["Auth"],
+        "summary": "User logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "pet object",
+          "description": "id object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/addPetRequest"
+                "$ref": "#/components/schemas/logoutRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful added pet",
+            "description": "Successful logout",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/addPetResponse"
+                  "$ref": "#/components/schemas/logoutResponse"
                 }
               }
             }
@@ -164,32 +168,30 @@
             "content": {}
           }
         }
-      }
-    },
-    "/api/user/logout": {
+      },
       "post": {
         "tags": ["User"],
-        "summary": "User logout",
+        "summary": "Add your pet",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "id object",
+          "description": "pet object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/logoutRequest"
+                "$ref": "#/components/schemas/addPetRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful logout",
+            "description": "Successful added pet",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/logoutResponse"
+                  "$ref": "#/components/schemas/addPetResponse"
                 }
               }
             }
@@ -199,6 +201,30 @@
             "content": {}
           }
         }
+      },
+      "put":{
+        "tags": ["User"],
+        "summary": "Update info about user pet by pet id"
+      },
+      "delete":{
+        "tags": ["User"],
+        "summary": "delete user pet by pet id"
+      }
+    },
+    "/api/user/current": {
+      "get":{
+        "tags":["User"],
+        "summary": "Get info about current user"
+      },
+      "put":{
+        "tags": ["User"],
+        "summary": "Update user info"
+      }
+    },
+    "/api/user/avatar":{
+      "patch":{
+        "tags":["User"],
+        "summary": "Upload user avatar"
       }
     },
     "api/pets": {
@@ -295,6 +321,12 @@
         }
       }
       
+    },
+    "api/notices": {
+      "get":{
+        "tags": ["Notices"],
+        "summary": "Get all notices"
+      }
     }
   },
 
