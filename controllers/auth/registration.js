@@ -32,13 +32,12 @@ const registration = async (req, res, next) => {
     // await sendEmail(verifyEmail);
 
     res.status(201).json({
-        user: {
-            email: newUser.email,
-            subscription: newUser.subscription,
-            id: newUser._id,
-            avatarURL: newUser.avatarURL,
-            // verificationToken,
-        },
+      user: {
+        email: newUser.email,
+        name: newUser.name,
+        id: newUser._id,
+        // verificationToken,
+      },
     });
 };
 

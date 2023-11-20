@@ -18,6 +18,27 @@ const petsSchema = Schema(
       type: String,
       required: [true, "Comments is required"],
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    filter: {
+      type: String,
+      enum: ["sell", "lost", "in good hands", "found"],
+      default: "my ads",
+    },
+    user_email: {
+      type: String,
+    },
+    user_phone: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
     // photoURL: {
     //   type: String,
     //   required: [true, "Pet photo is required"],
