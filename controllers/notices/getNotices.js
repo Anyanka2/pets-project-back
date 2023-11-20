@@ -1,17 +1,28 @@
 const Notice = require('../../models/notice')
+const User = require("../../models/user")
 
 const getNotices = async (req, res) => {
-    const userId = req.user.id;
-    const {category, keyword, sex, gt, lt, favorite, own} = req.query;
-    const queries = {
-        category,
-        sex
-    };
-    if (keyword) queries['title'] = {$regex: keyword, $options: 'i'};
-    if (gt) queries['birthday'] = {$gt: gt}
-    if (lt) queries['birthday'] = {$lt: lt}
-    if (favorite && userId) queries['favorite'] = {$elemMatch: {id: userId}}
-    if (own && userId) queries['owner'] = userId
+    const userId = req?.user?.id;
+    const {category, keyword, sex, gt, lt, favorite, own} = req.body;
+    let queries = {};
+
+    if (gt || lt) {
+        const period = gt || lt
+        let date = new Date()
+        date.setFullYear((date.getFullYear() - period))
+
+        if (gt) queries.birthday = {$lt: date}
+        if (lt) queries.birthday = {$gt: date}
+    }
+    if (category) queries.category = category
+    if (sex) queries.sex = sex
+    if (keyword) queries.title = {$regex: keyword, $options: 'i'};
+    if (own && userId) queries.owner = userId
+
+    if (favorite && userId) {
+        const {favoriteNotices} = req.user
+        queries._id = {$in: favoriteNotices}
+    }
 
     const notices = await Notice.find(queries)
 
