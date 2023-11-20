@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "0.1.10",
+    "version": "0.1.15",
     "title": "Swagger for pets",
     "description": "Showing off swagger-ui-express",
     "license": {
@@ -251,7 +251,7 @@
         }
       }
     },
-    "api/pets/:id": {
+    "api/pets/{id}": {
       "get": {
         "tags": ["Pets"],
         "summary": "List all pets on database",
@@ -283,7 +283,7 @@
         }
       }
     },
-    "api/news": {
+    "/api/news?offset=3&limit=25": {
       "get":{
         "tags":["Other"],
         "summary": "Return list of news about pets",
@@ -291,19 +291,25 @@
           {
             "in": "query",
             "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
             "description": "The page number",
             "requred": false,
             "type": "number",
-            "example": 1,
+            "example": 5,
             "default": 1
           },
           {
             "in": "query",
             "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
             "description": "The number of items",
             "requred": false,
             "type": "number",
-            "example": 10,
+            "example": 20,
             "default": 10
           }
         ],
@@ -322,10 +328,36 @@
       }
       
     },
-    "api/notices": {
+    "/api/notices": {
       "get":{
         "tags": ["Notices"],
         "summary": "Get all notices"
+      },
+      "post":{
+        "tags": ["Notices"],
+        "summary": "add new notice"
+      }
+    },
+    "/api/notices/{noticeId}":{
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get info about one notice"
+      },
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Get info about one notice"
+      }
+    },
+    "/api/notices/{noticeId}/addToFavorite": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Add notice to Favorite"
+      }
+    },
+    "/api/notices/{noticeId}/removeFromFavorite": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Remove notice to Favorite"
       }
     }
   },
