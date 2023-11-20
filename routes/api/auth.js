@@ -9,9 +9,9 @@ router.post("/login", wrapper(controller.login));
 
 router.post("/logout", wrapper(controller.logout));
 
-// router.get("/verify/:verificationToken", wrapper(controller.verifyEmail));
+router.get("/verify/:verificationToken", wrapper(controller.verifyEmail));
 
-// router.post("/verify", wrapper(controller.resendVerifyEmail));
+router.post("/verify", wrapper(controller.resendVerifyEmail));
 
 module.exports = router;
 

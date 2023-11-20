@@ -5,6 +5,7 @@ const currentUser = require("./currentUser");
 const uploadImage = require('./uploadImage');
 const updateMyPet = require('./updateMyPet.js');
 const deleteMyPet = require('./deleteMyPet.js');
+const updateInfoCurrentUser = require("./updateInfoCurrentUser.js");
 
 module.exports = {
   addMyPet: wrapper(addMyPet),
@@ -12,5 +13,6 @@ module.exports = {
   currentUser: wrapper(currentUser),
   uploadImage: wrapper(uploadImage),
   updateMyPet: wrapper(updateMyPet),
-  deleteMyPet: wrapper(deleteMyPet)
+  deleteMyPet: wrapper(deleteMyPet),
+  updateInfoCurrentUser: wrapper(updateInfoCurrentUser),
 };
