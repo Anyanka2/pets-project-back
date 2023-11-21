@@ -3,7 +3,8 @@ const User = require("../../models/user")
 
 const getNotices = async (req, res) => {
     const userId = req?.user?.id;
-    const {category, keyword, sex, gt, lt, favorite, own} = req.body;
+    const {category, keyword, sex, gt, lt, favorite, own, page = 1, limit = 2} = req.body;
+    const offset = (page - 1) * limit;
     let queries = {};
 
     if (gt || lt) {
@@ -26,9 +27,11 @@ const getNotices = async (req, res) => {
 
     if (favorite || own && !userId) res.status(401).json("Not authorized")
 
-    const notices = await Notice.find(queries)
+    const notices = await Notice.find(queries).sort('-createdAt').exec();
+    const allPages = Math.ceil(notices.length / limit);
+    const paginatedNotices = notices.splice(offset, limit);
 
-    res.status(200).json(notices);
+    res.status(200).json({notices: paginatedNotices, allPages});
 }
 
 module.exports = getNotices

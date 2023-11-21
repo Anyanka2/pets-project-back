@@ -379,7 +379,7 @@
         "tags": [
           "Notices"
         ],
-        "summary": "Get all notices",
+        "summary": "Get notices",
         "parameters": [
           {
             "in": "query",
@@ -457,6 +457,30 @@
             "requred": false,
             "type": "boolean",
             "example": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Pagination page",
+            "requred": false,
+            "type": "number",
+            "example": 1,
+            "default": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Items on page",
+            "requred": false,
+            "type": "number",
+            "example": 4,
+            "default": 12
           }
         ],
         "responses": {
