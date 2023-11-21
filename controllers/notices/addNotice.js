@@ -3,7 +3,7 @@ const Notice = require('../../models/notice')
 const addNotice = async (req, res, next) => {
     const {id: owner, email, phone} = req.user;
 
-    const {name, title, birthday, type, comments, category, location, sex} =
+    const {name, title, birthday, type, comments, category, location, sex, price} =
         req.body;
 
     const resolve = await Notice.create({
@@ -18,6 +18,7 @@ const addNotice = async (req, res, next) => {
         email,
         location,
         title,
+        price
     });
 
     res.status(201).json(resolve);
