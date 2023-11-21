@@ -24,6 +24,8 @@ const getNotices = async (req, res) => {
         queries._id = {$in: favoriteNotices}
     }
 
+    if (favorite || own && !userId) res.status(401).json("Not authorized")
+
     const notices = await Notice.find(queries)
 
     res.status(200).json(notices);

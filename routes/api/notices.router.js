@@ -4,7 +4,7 @@ const controller = require('../../controllers/notices')
 const wrapper = require('../../helpers/controllerWrappers')
 const auth = require('../../middlewares/authMiddleware')
 
-router.get('/', wrapper(auth), wrapper(controller.getNotices))
+router.get('/', wrapper(controller.getNotices))
 
 router.get('/:noticeId', wrapper(controller.getNoticeById))
 

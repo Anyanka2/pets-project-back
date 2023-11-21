@@ -25,6 +25,7 @@ const noticeSchema = Schema(
         },
         sex: {
             type: String,
+            required: [true, "Sex is required"],
         },
         price: {
             type: Number,
