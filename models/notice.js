@@ -25,6 +25,10 @@ const noticeSchema = Schema(
         },
         sex: {
             type: String,
+            required: [true, "Sex is required"],
+        },
+        price: {
+            type: Number,
         },
         phone: {
             type: String,
@@ -37,13 +41,12 @@ const noticeSchema = Schema(
             type: String,
             required: [true, "Comments is required"],
         },
+        imageUrl: {
+            type: String,
+        },
         owner: {
             type: String,
             required: [true, "Owner is required"],
-        },
-        favoriteForUsers: {
-            type: Schema.Types.ObjectId,
-            ref: 'user'
         },
     },
     {

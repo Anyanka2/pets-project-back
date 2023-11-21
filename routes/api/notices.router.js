@@ -12,8 +12,4 @@ router.post('/', wrapper(auth), wrapper(controller.addNotice))
 
 router.delete('/:noticeId', wrapper(auth), wrapper(controller.deleteNotice))
 
-router.patch('/:noticeId/addToFavorite', wrapper(auth), wrapper(controller.addToFavorite))
-
-router.patch('/:noticeId/removeFromFavorite', wrapper(auth), wrapper(controller.removeFromFavorite))
-
 module.exports = router

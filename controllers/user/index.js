@@ -6,13 +6,15 @@ const uploadImage = require('./uploadImage');
 const updateMyPet = require('./updateMyPet.js');
 const deleteMyPet = require('./deleteMyPet.js');
 const updateInfoCurrentUser = require("./updateInfoCurrentUser.js");
+const favoriteNotices = require('./favoriteNotices')
 
 module.exports = {
-  addMyPet: wrapper(addMyPet),
-  getListPets: wrapper(getListPets),
-  currentUser: wrapper(currentUser),
-  uploadImage: wrapper(uploadImage),
-  updateMyPet: wrapper(updateMyPet),
-  deleteMyPet: wrapper(deleteMyPet),
-  updateInfoCurrentUser: wrapper(updateInfoCurrentUser),
+    addMyPet: wrapper(addMyPet),
+    getListPets: wrapper(getListPets),
+    currentUser: wrapper(currentUser),
+    uploadImage: wrapper(uploadImage),
+    updateMyPet: wrapper(updateMyPet),
+    deleteMyPet: wrapper(deleteMyPet),
+    updateInfoCurrentUser: wrapper(updateInfoCurrentUser),
+    favoriteNotices: wrapper(favoriteNotices),
 };

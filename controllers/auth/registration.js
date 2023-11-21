@@ -26,19 +26,19 @@ const registration = async (req, res, next) => {
     });
 
     const verifyEmail = {
-      to: email,
-      subject: "Verify email",
-      html: `<a target="_blank" href="http://localhost:${PORT}/api/auth/verify/${verificationToken}" >Click verify email</a>`,
+        to: email,
+        subject: "Verify email",
+        html: `<a target="_blank" href="http://localhost:${PORT}/api/auth/verify/${verificationToken}" >Click verify email</a>`,
     };
     await sendEmail(verifyEmail);
 
     res.status(201).json({
-      user: {
-        email: newUser.email,
-        name: newUser.name,
-        id: newUser._id,
-        verificationToken,
-      },
+        user: {
+            email: newUser.email,
+            name: newUser.name,
+            id: newUser._id,
+            verificationToken,
+        },
     });
 };
 
