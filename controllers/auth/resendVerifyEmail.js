@@ -7,7 +7,7 @@ const resendVerifyEmail = async (req, res) => {
   const user = await User.findOne({ email });
   const { PORT } = process.env;
   if (!user) {
-    throw requestError(401, "Email not found");
+    throw requestError(400, "Email not found");
   }
   if (user.verify) {
     throw requestError(401, "Email already verify");

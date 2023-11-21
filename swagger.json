@@ -9,19 +9,11 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "servers": [
-    {
-      "url": "https://pet-web-server.onrender.com"
-    },
-    {
-      "url": "http://localhost:3000/"
-    }
+    { "url": "https://pet-web-server.onrender.com" },
+    { "url": "http://localhost:3030/" }
   ],
   "tags": [
     {
@@ -48,9 +40,7 @@
   "paths": {
     "/api/auth/registration": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -88,9 +78,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User login",
         "parameters": [],
         "requestBody": {
@@ -128,16 +116,10 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User logout",
         "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
+        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "id object",
           "required": true,
@@ -169,16 +151,10 @@
     },
     "/api/user/pets": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "List your pets",
         "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
             "description": "Successful list pets",
@@ -197,16 +173,10 @@
         }
       },
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Add your pet",
         "parameters": [],
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
+        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "pet object",
           "required": true,
@@ -235,48 +205,37 @@
           }
         }
       },
-      "put": {
-        "tags": [
-          "User"
-        ],
+      "put":{
+        "tags": ["User"],
         "summary": "Update info about user pet by pet id"
       },
-      "delete": {
-        "tags": [
-          "User"
-        ],
+      "delete":{
+        "tags": ["User"],
         "summary": "delete user pet by pet id"
       }
     },
     "/api/user/current": {
-      "get": {
-        "tags": [
-          "User"
-        ],
+      "get":{
+        "tags":["User"],
         "summary": "Get info about current user"
       },
-      "put": {
-        "tags": [
-          "User"
-        ],
+      "put":{
+        "tags": ["User"],
         "summary": "Update user info"
       }
     },
-    "/api/user/avatar": {
-      "patch": {
-        "tags": [
-          "User"
-        ],
+    "/api/user/avatar":{
+      "patch":{
+        "tags":["User"],
         "summary": "Upload user avatar"
       }
     },
     "api/pets": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "List all pets on database",
         "parameters": [],
+
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -297,9 +256,7 @@
     },
     "api/pets/{id}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "List all pets on database",
         "parameters": [
           {
@@ -310,6 +267,7 @@
             "description": "User's id"
           }
         ],
+
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -329,10 +287,8 @@
       }
     },
     "/api/news?offset=3&limit=25": {
-      "get": {
-        "tags": [
-          "Other"
-        ],
+      "get":{
+        "tags":["Other"],
         "summary": "Return list of news about pets",
         "parameters": [
           {
@@ -363,9 +319,9 @@
         "responses": {
           "200": {
             "description": "Successful fetch news",
-            "content": {
-              "application/json": {
-                "schema": {
+            "content":{
+              "application/json":{
+                "schema":{
                   "$ref": "#/components/schemas/newsResponse"
                 }
               }
@@ -373,358 +329,47 @@
           }
         }
       }
+      
     },
     "/api/notices": {
-      "get": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Get notices",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "keyword",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Part of title",
-            "requred": false,
-            "type": "string",
-            "example": "title1"
-          },
-          {
-            "in": "query",
-            "name": "category",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Notice category",
-            "requred": false,
-            "type": "string",
-            "example": "sell"
-          },
-          {
-            "in": "query",
-            "name": "sex",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Sex of a pet",
-            "requred": false,
-            "type": "string",
-            "example": "male"
-          },
-          {
-            "in": "query",
-            "name": "gt",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Pets that olded then {number}",
-            "requred": false,
-            "type": "number",
-            "example": 2
-          },
-          {
-            "in": "query",
-            "name": "lt",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Pets that younger then {number}",
-            "requred": false,
-            "type": "number",
-            "example": 2
-          },
-          {
-            "in": "query",
-            "name": "favorite",
-            "schema": {
-              "type": "boolean"
-            },
-            "description": "Favorite notices of the user",
-            "requred": false,
-            "type": "boolean",
-            "example": true
-          },
-          {
-            "in": "query",
-            "name": "own",
-            "schema": {
-              "type": "boolean"
-            },
-            "description": "Own notices of the user",
-            "requred": false,
-            "type": "boolean",
-            "example": true
-          },
-          {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Pagination page",
-            "requred": false,
-            "type": "number",
-            "example": 1,
-            "default": 1
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Items on page",
-            "requred": false,
-            "type": "number",
-            "example": 4,
-            "default": 12
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/noticesResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
+      "get":{
+        "tags": ["Notices"],
+        "summary": "Get all notices"
       },
-      "post": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Add new notice",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "title",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Title of the notice",
-            "requred": true,
-            "type": "string",
-            "example": "title1"
-          },
-          {
-            "in": "query",
-            "name": "category",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Notice category",
-            "requred": true,
-            "type": "string",
-            "example": "on good hands"
-          },
-          {
-            "in": "query",
-            "name": "sex",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Sex of a pet",
-            "requred": true,
-            "type": "string",
-            "example": "male"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Pet's name",
-            "requred": true,
-            "type": "string",
-            "example": "Valera"
-          },
-          {
-            "in": "query",
-            "name": "birthday",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Pet's birthday",
-            "requred": true,
-            "type": "number",
-            "format": "number",
-            "example": "11.12.2020"
-          },
-          {
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Pet's type",
-            "requred": true,
-            "type": "string",
-            "example": "Sheepdog"
-          },
-          {
-            "in": "query",
-            "name": "comments",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comments about your pet ",
-            "requred": true,
-            "type": "string",
-            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
-          },
-          {
-            "in": "query",
-            "name": "location",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Pet's location",
-            "type": "string",
-            "example": "Lviv"
-          },
-          {
-            "in": "query",
-            "name": "price",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Pet's price",
-            "type": "number",
-            "example": 21312
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Notice added",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/noticesResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request ",
-            "content": {}
-          }
-        }
+      "post":{
+        "tags": ["Notices"],
+        "summary": "add new notice"
       }
     },
-    "/api/notices/{noticeId}": {
+    "/api/notices/{noticeId}":{
       "get": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Get info about one notice",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "noticeId",
-            "required": true,
-            "type": "string",
-            "description": "Notice id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/noticesResponse"
-                }
-              }
-            }
-          }
-        }
+        "tags": ["Notices"],
+        "summary": "Get info about one notice"
       },
       "delete": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Remove one notice",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "noticeId",
-            "required": true,
-            "type": "string",
-            "description": "Notice id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/noticesResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
+        "tags": ["Notices"],
+        "summary": "Get info about one notice"
       }
     },
-    "/api/users/favoriteNotices/{noticeId}": {
+    "/api/notices/{noticeId}/addToFavorite": {
       "patch": {
-        "tags": [
-          "Notices"
-        ],
-        "summary": "Add notice to user's favorite",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "noticeId",
-            "required": true,
-            "type": "string",
-            "description": "Notice id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "favorites notices updated",
-            "content": {}
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
+        "tags": ["Notices"],
+        "summary": "Add notice to Favorite"
+      }
+    },
+    "/api/notices/{noticeId}/removeFromFavorite": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Remove notice to Favorite"
       }
     }
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -767,10 +412,7 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -807,15 +449,7 @@
       },
       "addPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments",
-          "location",
-          "price",
-          "filter"
-        ],
+        "required": ["name", "birthday", "type", "comments", "location", "price", "filter"],
         "properties": {
           "name": {
             "type": "string",
@@ -861,12 +495,7 @@
       },
       "addPetResponse": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments"
-        ],
+        "required": ["name", "birthday", "type", "comments"],
         "properties": {
           "id": {
             "type": "string",
@@ -1020,27 +649,27 @@
           }
         ]
       },
-      "newsResponse": {
+      "newsResponse":{
         "type": "object",
-        "properties": {
-          "status": {
+        "properties":{
+          "status":{
             "type": "string",
             "description": "Status query",
-            "format": "string",
+            "format":"string",
             "example": "ok"
           },
-          "code": {
-            "type": "number",
+          "code":{
+            "type":"number",
             "description": "duplicate response code",
             "format": "number",
             "example": 200
           },
           "data": {
-            "type": "object",
+            "type":"object",
             "properties": {
               "resourses": {
                 "type": "array",
-                "items": {
+                "items":{
                   "type": "object",
                   "properties": {
                     "_id": {
@@ -1066,19 +695,19 @@
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    },
+                    },  
                     "date": {
                       "type": "string",
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    },
+                    }, 
                     "url": {
                       "type": "string",
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    },
+                    }, 
                     "nytID": {
                       "type": "string",
                       "description": "Pet's name",
@@ -1103,114 +732,37 @@
           "status": "ok",
           "code": 200,
           "data": {
-            "resourses": [
-              {
-                "_id": "655a08473e09b17fe5eeed27",
-                "imgUrl": "https://www.nytimes.com/images/2023/04/16/magazine/16mag-LOR/16mag-LOR-blog480.jpg",
-                "title": "What I Learned Dogsitting for New York City’s Opulent Elite",
-                "text": "In a city of yawning class inequality, some side hustles let you glimpse how the other half lives.",
-                "date": "2023-04-11T09:00:18.000Z",
-                "url": "https://www.nytimes.com/2023/04/11/magazine/dogsitting-rich-new-york.html",
-                "nytID": "nyt://article/8d29f1fc-d146-509d-8ceb-5a5b17d7886b",
-                "createdAt": "2023-11-19T13:06:16.190Z",
-                "updatedAt": "2023-11-19T13:06:16.190Z"
-              },
-              {
-                "_id": "655a08473e09b17fe5eeed28",
-                "imgUrl": "https://www.nytimes.com/images/2023/04/04/multimedia/00VIRTUAL-VETS-01b-fmzk/00VIRTUAL-VETS-01b-fmzk-blog480.jpg",
-                "title": "The Virtual Vet Will See You Meow",
-                "text": "Veterinary telemedicine could help more pet owners access much-needed care and put anxious animals at ease, but challenges remain.",
-                "date": "2023-04-07T09:00:46.000Z",
-                "url": "https://www.nytimes.com/2023/04/07/health/vet-pet-health-telemedicine.html",
-                "nytID": "nyt://article/992f2f7f-793c-5553-b722-348625f53a4b",
-                "createdAt": "2023-11-19T13:06:16.191Z",
-                "updatedAt": "2023-11-19T13:06:16.191Z"
-              }
-            ],
-            "total": 1151,
-            "totalPages": 116
-          }
-        }
-      },
-      "noticesResponse": {
-        "type": "object",
-        "required": [
-          "title",
-          "name",
-          "birthday",
-          "type",
-          "comments",
-          "location",
-          "price",
-          "category",
-          "email",
-          "phone",
-          "imageUrl"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "Notice title",
-            "example": "Сute dog looking for a home"
-          },
-          "name": {
-            "type": "string",
-            "description": "Pet's name",
-            "format": "name",
-            "example": "Barsik"
-          },
-          "birthday": {
-            "type": "number",
-            "description": "Pet's birthday",
-            "format": "number",
-            "example": "11.12.2020"
-          },
-          "type": {
-            "type": "string",
-            "description": "Pet's type",
-            "example": "Sheepdog"
-          },
-          "comments": {
-            "type": "string",
-            "description": "Comments about your pet ",
-            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
-          },
-          "location": {
-            "type": "string",
-            "description": "Pet's location",
-            "format": "string",
-            "example": "Lviv"
-          },
-          "price": {
-            "type": "number",
-            "description": "Pet's price",
-            "format": "number",
-            "example": 21312
-          },
-          "category": {
-            "type": "string",
-            "description": "sell, lost/found, in good hands, found",
-            "example": "sell"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "godrik999@gmail.com"
-          },
-          "phone": {
-            "type": "string",
-            "description": "User's phone",
-            "format": "phone",
-            "example": "+380971234567"
-          },
-          "imageUrl": {
-            "type": "string",
-            "description": "Notice image"
+              "resourses": [
+                  {
+                      "_id": "655a08473e09b17fe5eeed27",
+                      "imgUrl": "https://www.nytimes.com/images/2023/04/16/magazine/16mag-LOR/16mag-LOR-blog480.jpg",
+                      "title": "What I Learned Dogsitting for New York City’s Opulent Elite",
+                      "text": "In a city of yawning class inequality, some side hustles let you glimpse how the other half lives.",
+                      "date": "2023-04-11T09:00:18.000Z",
+                      "url": "https://www.nytimes.com/2023/04/11/magazine/dogsitting-rich-new-york.html",
+                      "nytID": "nyt://article/8d29f1fc-d146-509d-8ceb-5a5b17d7886b",
+                      "createdAt": "2023-11-19T13:06:16.190Z",
+                      "updatedAt": "2023-11-19T13:06:16.190Z"
+                  },
+                  {
+                      "_id": "655a08473e09b17fe5eeed28",
+                      "imgUrl": "https://www.nytimes.com/images/2023/04/04/multimedia/00VIRTUAL-VETS-01b-fmzk/00VIRTUAL-VETS-01b-fmzk-blog480.jpg",
+                      "title": "The Virtual Vet Will See You Meow",
+                      "text": "Veterinary telemedicine could help more pet owners access much-needed care and put anxious animals at ease, but challenges remain.",
+                      "date": "2023-04-07T09:00:46.000Z",
+                      "url": "https://www.nytimes.com/2023/04/07/health/vet-pet-health-telemedicine.html",
+                      "nytID": "nyt://article/992f2f7f-793c-5553-b722-348625f53a4b",
+                      "createdAt": "2023-11-19T13:06:16.191Z",
+                      "updatedAt": "2023-11-19T13:06:16.191Z"
+                  }
+              ],
+              "total": 1151,
+              "totalPages": 116
           }
         }
       }
     },
+
     "securitySchemes": {
       "Bearer": {
         "type": "http",
