@@ -28,7 +28,7 @@ const registration = async (req, res, next) => {
     const verifyEmail = {
       to: email,
       subject: "Verify email",
-      html: `<a target="_blank" href="http://localhost:${PORT}/api/auth/verify/${verificationToken}" >Click verify email</a>`,
+      html: `<a target="_blank" href="https://pet-web-server.onrender.com/api/auth/verify/${verificationToken}" >Click verify email</a>`,
     };
     await sendEmail(verifyEmail);
 
