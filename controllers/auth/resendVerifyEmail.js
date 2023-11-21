@@ -16,7 +16,7 @@ const resendVerifyEmail = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="http://localhost:${PORT}/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
+    html: `<a target="_blank" href="https://pet-web-server.onrender.com/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
   };
   await sendEmail(verifyEmail);
   res.json({
