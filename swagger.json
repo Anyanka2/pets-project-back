@@ -25,10 +25,6 @@
       "description": "User endpoints"
     },
     {
-      "name": "Pets",
-      "description": "All pets endpoints"
-    },
-    {
       "name": "Other",
       "description": "Public routes like news and sponsors"
     },
@@ -149,6 +145,77 @@
         }
       }
     },
+    "/api/auth/verify/:verificationToken": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Verification User",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "verificationToken",
+            "required": true,
+            "type": "string",
+            "description": "verificationToken User's"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Email verify success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/verifyResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email not found ",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "resend verify email user",
+        "parameters": [],
+
+        "requestBody": {
+          "description": "id object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resendVerifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verify email send success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resendVerifyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email not found ",
+            "content": {}
+          },
+          "401": {
+            "description": "Email already verify ",
+            "content": {}
+          }
+        }
+      }
+    },
     "/api/user/pets": {
       "get": {
         "tags": ["User"],
@@ -204,77 +271,40 @@
             "content": {}
           }
         }
-      },
-      "put":{
+      }
+    },
+    "api/user/pets/:id": {
+      "put": {
         "tags": ["User"],
-        "summary": "Update info about user pet by pet id"
-      },
-      "delete":{
-        "tags": ["User"],
-        "summary": "delete user pet by pet id"
-      }
-    },
-    "/api/user/current": {
-      "get":{
-        "tags":["User"],
-        "summary": "Get info about current user"
-      },
-      "put":{
-        "tags": ["User"],
-        "summary": "Update user info"
-      }
-    },
-    "/api/user/avatar":{
-      "patch":{
-        "tags":["User"],
-        "summary": "Upload user avatar"
-      }
-    },
-    "api/pets": {
-      "get": {
-        "tags": ["Pets"],
-        "summary": "List all pets on database",
-        "parameters": [],
-
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/listAllPets"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          }
-        }
-      }
-    },
-    "api/pets/{id}": {
-      "get": {
-        "tags": ["Pets"],
-        "summary": "List all pets on database",
+        "summary": "update info about my pet",
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
             "type": "string",
-            "description": "User's id"
+            "description": "Pet's id"
           }
         ],
-
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "pet object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInfoPetRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successful update info operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/listAllPets"
+                  "$ref": "#/components/schemas/updateInfoPetResponses"
                 }
               }
             }
@@ -284,11 +314,122 @@
             "content": {}
           }
         }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "delete pet by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Pet's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Successful delete ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deletePetResponses"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid id)",
+            "content": {}
+          }
+        }
+      }
+    },
+    "api/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get info current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/infoCurrentUserResponses"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update info current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "user object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateInfoUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update info ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateInfoUserResponses"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+    "api/user/avatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update avatar user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
       }
     },
     "/api/news?offset=3&limit=25": {
-      "get":{
-        "tags":["Other"],
+      "get": {
+        "tags": ["Other"],
         "summary": "Return list of news about pets",
         "parameters": [
           {
@@ -319,9 +460,9 @@
         "responses": {
           "200": {
             "description": "Successful fetch news",
-            "content":{
-              "application/json":{
-                "schema":{
+            "content": {
+              "application/json": {
+                "schema": {
                   "$ref": "#/components/schemas/newsResponse"
                 }
               }
@@ -329,19 +470,18 @@
           }
         }
       }
-      
     },
     "/api/notices": {
-      "get":{
+      "get": {
         "tags": ["Notices"],
         "summary": "Get all notices"
       },
-      "post":{
+      "post": {
         "tags": ["Notices"],
         "summary": "add new notice"
       }
     },
-    "/api/notices/{noticeId}":{
+    "/api/notices/{noticeId}": {
       "get": {
         "tags": ["Notices"],
         "summary": "Get info about one notice"
@@ -447,9 +587,43 @@
           }
         ]
       },
+      "verifyResponse": {
+        "type": "object",
+        "properties": {},
+        "example": {
+          "message": "Email verify success"
+        }
+      },
+      "resendVerifyRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          }
+        }
+      },
+      "resendVerifyResponse": {
+        "type": "object",
+        "properties": {},
+        "example": {
+          "message": "Verify email send success"
+        }
+      },
       "addPetRequest": {
         "type": "object",
-        "required": ["name", "birthday", "type", "comments", "location", "price", "filter"],
+        "required": [
+          "name",
+          "birthday",
+          "type",
+          "comments",
+          "location",
+          "price",
+          "filter"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -573,6 +747,75 @@
           }
         ]
       },
+      "updateInfoPetRequest": {
+        "type": "object",
+        "required": ["name", "birthday", "type", "comments"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "format": "name",
+            "example": "Barsik"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "Pet's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "example": "Sheepdog"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        }
+      },
+      "updateInfoPetResponses": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Pet's id",
+            "format": "string",
+            "example": "907d8sayhiashdbciuasdvc9786g3c"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "format": "name",
+            "example": "Barsik"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "Pet's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "example": "Sheepdog"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        }
+      },
+
+      "deletePetResponses": {
+        "type": "object",
+        "properties": {},
+        "example": {
+          "message": "Pet with {id} delete success"
+        }
+      },
       "logoutRequest": {
         "type": "object",
         "properties": {
@@ -649,27 +892,161 @@
           }
         ]
       },
-      "newsResponse":{
+      "infoCurrentUserResponses": {
         "type": "object",
-        "properties":{
-          "status":{
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id",
+            "format": "string",
+            "example": "rtfg4343t434g334ggg34a43"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "name",
+            "example": "Godrik"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "User's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "phone": {
+            "type": "number",
+            "description": "User's phone",
+            "format": "number",
+            "example": 9876543212
+          },
+          "city": {
+            "type": "string",
+            "description": "User's city",
+            "format": "string",
+            "example": "Lviv"
+          }
+        },
+        "example": {
+          "id": "0909kwe0-v9k23pioklimvadsfa",
+          "name": "Godrik",
+          "email": "godrik999@gmail.com",
+          "birthday": "11.12.2020",
+          "phone": 9876543212,
+          "city": "Lviv"
+        }
+      },
+      "updateInfoUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "name",
+            "example": "Godrik"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "User's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "phone": {
+            "type": "number",
+            "description": "User's phone",
+            "format": "number",
+            "example": 9876543212
+          },
+          "city": {
+            "type": "string",
+            "description": "User's city",
+            "format": "string",
+            "example": "Lviv"
+          }
+        },
+        "example": {
+          "name": "Godrik",
+          "email": "godrik999@gmail.com",
+          "birthday": "11.12.2020",
+          "phone": 9876543212,
+          "city": "Lviv"
+        }
+      },
+      "updateInfoUserResponses": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "name",
+            "example": "Godrik"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "User's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "phone": {
+            "type": "number",
+            "description": "User's phone",
+            "format": "number",
+            "example": 9876543212
+          },
+          "city": {
+            "type": "string",
+            "description": "User's city",
+            "format": "string",
+            "example": "Lviv"
+          }
+        },
+        "example": {
+          "id": "0909kwe0-v9k23pioklimvadsfa",
+          "name": "Godrik",
+          "email": "godrik999@gmail.com",
+          "birthday": "11.12.2020",
+          "phone": 9876543212,
+          "city": "Lviv"
+        }
+      },
+      "newsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
             "type": "string",
             "description": "Status query",
-            "format":"string",
+            "format": "string",
             "example": "ok"
           },
-          "code":{
-            "type":"number",
+          "code": {
+            "type": "number",
             "description": "duplicate response code",
             "format": "number",
             "example": 200
           },
           "data": {
-            "type":"object",
+            "type": "object",
             "properties": {
               "resourses": {
                 "type": "array",
-                "items":{
+                "items": {
                   "type": "object",
                   "properties": {
                     "_id": {
@@ -695,19 +1072,19 @@
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    },  
+                    },
                     "date": {
                       "type": "string",
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    }, 
+                    },
                     "url": {
                       "type": "string",
                       "description": "Pet's name",
                       "format": "name",
                       "example": "Barsik"
-                    }, 
+                    },
                     "nytID": {
                       "type": "string",
                       "description": "Pet's name",
@@ -732,32 +1109,32 @@
           "status": "ok",
           "code": 200,
           "data": {
-              "resourses": [
-                  {
-                      "_id": "655a08473e09b17fe5eeed27",
-                      "imgUrl": "https://www.nytimes.com/images/2023/04/16/magazine/16mag-LOR/16mag-LOR-blog480.jpg",
-                      "title": "What I Learned Dogsitting for New York City’s Opulent Elite",
-                      "text": "In a city of yawning class inequality, some side hustles let you glimpse how the other half lives.",
-                      "date": "2023-04-11T09:00:18.000Z",
-                      "url": "https://www.nytimes.com/2023/04/11/magazine/dogsitting-rich-new-york.html",
-                      "nytID": "nyt://article/8d29f1fc-d146-509d-8ceb-5a5b17d7886b",
-                      "createdAt": "2023-11-19T13:06:16.190Z",
-                      "updatedAt": "2023-11-19T13:06:16.190Z"
-                  },
-                  {
-                      "_id": "655a08473e09b17fe5eeed28",
-                      "imgUrl": "https://www.nytimes.com/images/2023/04/04/multimedia/00VIRTUAL-VETS-01b-fmzk/00VIRTUAL-VETS-01b-fmzk-blog480.jpg",
-                      "title": "The Virtual Vet Will See You Meow",
-                      "text": "Veterinary telemedicine could help more pet owners access much-needed care and put anxious animals at ease, but challenges remain.",
-                      "date": "2023-04-07T09:00:46.000Z",
-                      "url": "https://www.nytimes.com/2023/04/07/health/vet-pet-health-telemedicine.html",
-                      "nytID": "nyt://article/992f2f7f-793c-5553-b722-348625f53a4b",
-                      "createdAt": "2023-11-19T13:06:16.191Z",
-                      "updatedAt": "2023-11-19T13:06:16.191Z"
-                  }
-              ],
-              "total": 1151,
-              "totalPages": 116
+            "resourses": [
+              {
+                "_id": "655a08473e09b17fe5eeed27",
+                "imgUrl": "https://www.nytimes.com/images/2023/04/16/magazine/16mag-LOR/16mag-LOR-blog480.jpg",
+                "title": "What I Learned Dogsitting for New York City’s Opulent Elite",
+                "text": "In a city of yawning class inequality, some side hustles let you glimpse how the other half lives.",
+                "date": "2023-04-11T09:00:18.000Z",
+                "url": "https://www.nytimes.com/2023/04/11/magazine/dogsitting-rich-new-york.html",
+                "nytID": "nyt://article/8d29f1fc-d146-509d-8ceb-5a5b17d7886b",
+                "createdAt": "2023-11-19T13:06:16.190Z",
+                "updatedAt": "2023-11-19T13:06:16.190Z"
+              },
+              {
+                "_id": "655a08473e09b17fe5eeed28",
+                "imgUrl": "https://www.nytimes.com/images/2023/04/04/multimedia/00VIRTUAL-VETS-01b-fmzk/00VIRTUAL-VETS-01b-fmzk-blog480.jpg",
+                "title": "The Virtual Vet Will See You Meow",
+                "text": "Veterinary telemedicine could help more pet owners access much-needed care and put anxious animals at ease, but challenges remain.",
+                "date": "2023-04-07T09:00:46.000Z",
+                "url": "https://www.nytimes.com/2023/04/07/health/vet-pet-health-telemedicine.html",
+                "nytID": "nyt://article/992f2f7f-793c-5553-b722-348625f53a4b",
+                "createdAt": "2023-11-19T13:06:16.191Z",
+                "updatedAt": "2023-11-19T13:06:16.191Z"
+              }
+            ],
+            "total": 1151,
+            "totalPages": 116
           }
         }
       }
