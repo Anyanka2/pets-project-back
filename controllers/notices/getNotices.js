@@ -28,10 +28,15 @@ const getNotices = async (req, res) => {
     if (favorite || own && !userId) res.status(401).json("Not authorized")
 
     const notices = await Notice.find(queries).sort('-createdAt').exec();
-    const allPages = Math.ceil(notices.length / limit);
+
+    console.log(notices)
+    if (!notices || notices.length === 0) return res.status(404).json("Not found");
+
+    const totalNotices = notices.length;
+    const totalPages = Math.ceil(notices.length / limit);
     const paginatedNotices = notices.splice(offset, limit);
 
-    res.status(200).json({notices: paginatedNotices, allPages});
+    res.status(200).json({notices: paginatedNotices, totalNotices, totalPages});
 }
 
 module.exports = getNotices
