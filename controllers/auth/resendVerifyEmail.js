@@ -5,7 +5,7 @@ const User = require("../../models/user");
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
-  const { PORT } = process.env;
+  const { VERIFY_HOST } = process.env;
   if (!user) {
     throw requestError(400, "Email not found");
   }
@@ -16,7 +16,7 @@ const resendVerifyEmail = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="https://pet-web-server.onrender.com/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
+    html: `<a target="_blank" href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
   };
   await sendEmail(verifyEmail);
   res.json({

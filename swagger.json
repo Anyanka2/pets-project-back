@@ -62,11 +62,11 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Bad request ",
             "content": {}
           },
           "409": {
-            "description": "Provided email already exists",
+            "description": "Email already in use",
             "content": {}
           }
         }
@@ -89,7 +89,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -99,8 +99,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
+          "401": {
+            "description": "Email or password is wrong",
             "content": {}
           },
           "409": {
@@ -128,7 +128,7 @@
           }
         },
         "responses": {
-          "200": {
+          "204": {
             "description": "Successful logout",
             "content": {
               "application/json": {
@@ -170,8 +170,12 @@
               }
             }
           },
-          "401": {
+          "400": {
             "description": "Email not found ",
+            "content": {}
+          },
+          "401": {
+            "description": "Email already verify ",
             "content": {}
           }
         }
@@ -196,7 +200,7 @@
         },
         "responses": {
           "200": {
-            "description": "Verify email send success",
+            "description": "Verify email resend ",
             "content": {
               "application/json": {
                 "schema": {
@@ -217,28 +221,6 @@
       }
     },
     "/api/user/pets": {
-      "get": {
-        "tags": ["User"],
-        "summary": "List your pets",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": {
-            "description": "Successful list pets",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/listPetResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request ",
-            "content": {}
-          }
-        }
-      },
       "post": {
         "tags": ["User"],
         "summary": "Add your pet",
@@ -256,7 +238,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful added pet",
             "content": {
               "application/json": {
@@ -273,7 +255,7 @@
         }
       }
     },
-    "api/user/pets/:id": {
+    "api/user/pets/{id}": {
       "put": {
         "tags": ["User"],
         "summary": "update info about my pet",
@@ -615,15 +597,7 @@
       },
       "addPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments",
-          "location",
-          "price",
-          "filter"
-        ],
+        "required": ["name", "birthday", "type", "comments"],
         "properties": {
           "name": {
             "type": "string",
@@ -646,24 +620,6 @@
             "type": "string",
             "description": "Comments about your pet ",
             "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
-          },
-          "location": {
-            "type": "string",
-            "description": "Pet's location",
-            "format": "string",
-            "example": "Lviv"
-          },
-          "price": {
-            "type": "number",
-            "description": "Pet's price",
-            "format": "number",
-            "example": 21312
-          },
-          "filter": {
-            "type": "string",
-            "description": "sell, lost/found, in good hands, found",
-            "format": "string",
-            "example": "sell"
           }
         }
       },
@@ -698,6 +654,11 @@
             "type": "string",
             "description": "Comments about your pet ",
             "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          },
+          "filter": {
+            "type": "string",
+            "description": "filter for pets ",
+            "example": "my ads"
           }
         }
       },
@@ -932,13 +893,29 @@
             "example": "Lviv"
           }
         },
-        "example": {
-          "id": "0909kwe0-v9k23pioklimvadsfa",
+        "example":  {
+          "_id": "655b92732d1e3b5e7bf79bcb",
           "name": "Godrik",
           "email": "godrik999@gmail.com",
-          "birthday": "11.12.2020",
-          "phone": 9876543212,
-          "city": "Lviv"
+          "birthday": "2012-12-11T22:00:00.000Z",
+          "city": "Lviv",
+          "phone": "100000001",
+          "petsData": [
+            {
+              "_id": "655f83b49b62f4afc2ce8aa6",
+              "name": "pet1",
+              "birthday": "12.12.12",
+              "type": "oso",
+              "comments": "test pet 1"
+            },
+            {
+              "_id": "655f8588873d64055f236942",
+              "name": "pet2",
+              "birthday": "12.12.12",
+              "type": "oso",
+              "comments": "test pet 2"
+            }
+          ]
         }
       },
       "updateInfoUserRequest": {
@@ -976,11 +953,12 @@
           }
         },
         "example": {
+          "_id": "655b92732d1e3b5e7bf79bcb",
           "name": "Godrik",
           "email": "godrik999@gmail.com",
-          "birthday": "11.12.2020",
-          "phone": 9876543212,
-          "city": "Lviv"
+          "birthday": "2012-12-11T22:00:00.000Z",
+          "city": "Lviv",
+          "phone": "100000001"
         }
       },
       "updateInfoUserResponses": {
