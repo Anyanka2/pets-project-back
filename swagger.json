@@ -9,11 +9,19 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "servers": [
-    { "url": "https://pet-web-server.onrender.com" },
-    { "url": "http://localhost:3030/" }
+    {
+      "url": "https://pet-web-server.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000/"
+    }
   ],
   "tags": [
     {
@@ -36,7 +44,9 @@
   "paths": {
     "/api/auth/registration": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -74,7 +84,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User login",
         "parameters": [],
         "requestBody": {
@@ -112,10 +124,16 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User logout",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "id object",
           "required": true,
@@ -147,7 +165,9 @@
     },
     "/api/auth/verify/:verificationToken": {
       "get": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Verification User",
         "parameters": [
           {
@@ -158,7 +178,6 @@
             "description": "verificationToken User's"
           }
         ],
-
         "responses": {
           "200": {
             "description": "Email verify success",
@@ -183,10 +202,11 @@
     },
     "/api/auth/verify": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "resend verify email user",
         "parameters": [],
-
         "requestBody": {
           "description": "id object",
           "required": true,
@@ -222,10 +242,16 @@
     },
     "/api/user/pets": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Add your pet",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "pet object",
           "required": true,
@@ -257,7 +283,9 @@
     },
     "api/user/pets/{id}": {
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "update info about my pet",
         "parameters": [
           {
@@ -268,7 +296,11 @@
             "description": "Pet's id"
           }
         ],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "pet object",
           "required": true,
@@ -298,7 +330,9 @@
         }
       },
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "delete pet by id",
         "parameters": [
           {
@@ -309,7 +343,11 @@
             "description": "Pet's id"
           }
         ],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "204": {
             "description": "Successful delete ",
@@ -330,10 +368,16 @@
     },
     "api/user/current": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get info current user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -352,10 +396,16 @@
         }
       },
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update info current user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "user object",
           "required": true,
@@ -387,18 +437,21 @@
     },
     "api/user/avatar": {
       "patch": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update avatar user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/avatarResponse"
-                }
               }
             }
           },
@@ -411,7 +464,9 @@
     },
     "/api/news?offset=3&limit=25": {
       "get": {
-        "tags": ["Other"],
+        "tags": [
+          "Other"
+        ],
         "summary": "Return list of news about pets",
         "parameters": [
           {
@@ -454,44 +509,138 @@
       }
     },
     "/api/notices": {
-      "get": {
-        "tags": ["Notices"],
-        "summary": "Get all notices"
-      },
       "post": {
-        "tags": ["Notices"],
-        "summary": "add new notice"
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get notices",
+        "parameters": [],
+        "requestBody": {
+          "description": "notices array",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getNoticesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getNoticesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/addNotice": {
+      "post": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Add new notice"
       }
     },
     "/api/notices/{noticeId}": {
       "get": {
-        "tags": ["Notices"],
-        "summary": "Get info about one notice"
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get info about notice by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Notice id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getNoticesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
       },
       "delete": {
-        "tags": ["Notices"],
-        "summary": "Get info about one notice"
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Delete notice by id",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Notice id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
       }
     },
-    "/api/notices/{noticeId}/addToFavorite": {
+    "/api/users/favoriteNotices/{noticeId}": {
       "patch": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Add notice to Favorite"
-      }
-    },
-    "/api/notices/{noticeId}/removeFromFavorite": {
-      "patch": {
-        "tags": ["Notices"],
-        "summary": "Remove notice to Favorite"
       }
     }
   },
-
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -534,7 +683,10 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -578,7 +730,9 @@
       },
       "resendVerifyRequest": {
         "type": "object",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -597,7 +751,12 @@
       },
       "addPetRequest": {
         "type": "object",
-        "required": ["name", "birthday", "type", "comments"],
+        "required": [
+          "name",
+          "birthday",
+          "type",
+          "comments"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -625,7 +784,12 @@
       },
       "addPetResponse": {
         "type": "object",
-        "required": ["name", "birthday", "type", "comments"],
+        "required": [
+          "name",
+          "birthday",
+          "type",
+          "comments"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -710,7 +874,12 @@
       },
       "updateInfoPetRequest": {
         "type": "object",
-        "required": ["name", "birthday", "type", "comments"],
+        "required": [
+          "name",
+          "birthday",
+          "type",
+          "comments"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -769,7 +938,6 @@
           }
         }
       },
-
       "deletePetResponses": {
         "type": "object",
         "properties": {},
@@ -893,7 +1061,7 @@
             "example": "Lviv"
           }
         },
-        "example":  {
+        "example": {
           "_id": "655b92732d1e3b5e7bf79bcb",
           "name": "Godrik",
           "email": "godrik999@gmail.com",
@@ -1115,9 +1283,143 @@
             "totalPages": 116
           }
         }
+      },
+      "getNoticesRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Notice category",
+            "example": "sell"
+          },
+          "keyword": {
+            "type": "string",
+            "description": "Part of a title",
+            "example": "title1"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet's sex",
+            "example": "male"
+          },
+          "gt": {
+            "type": "number",
+            "description": "Age greater than",
+            "format": "number",
+            "example": 1
+          },
+          "lt": {
+            "type": "number",
+            "description": "Age less than",
+            "format": "number",
+            "example": 1
+          },
+          "favorite": {
+            "type": "boolean",
+            "description": "User's favorite notices (Only for authorized)",
+            "example": true
+          },
+          "own": {
+            "type": "boolean",
+            "description": "Notices created by user (Only for authorized)",
+            "example": true
+          },
+          "page": {
+            "type": "number",
+            "description": "Page of pagination",
+            "example": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Notices on page",
+            "example": 4
+          }
+        },
+        "example": {
+          "category": "sell",
+          "keyword": "title1",
+          "gt": 1,
+          "lt": 1,
+          "sex": "male",
+          "page": 1,
+          "limit": 4
+        }
+      },
+      "getNoticesResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Notice id",
+            "example": "655bad9170743db9b925fbc6"
+          },
+          "category": {
+            "type": "string",
+            "description": "Notice category",
+            "example": "sell"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice title",
+            "example": "some title"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet's sex",
+            "example": "male"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "name",
+            "example": "Godrik"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "example": "Sheepdog"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          },
+          "birthday": {
+            "type": "number",
+            "description": "User's birthday",
+            "format": "number",
+            "example": "11.12.2020"
+          },
+          "phone": {
+            "type": "number",
+            "description": "User's phone",
+            "format": "number",
+            "example": 9876543212
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        },
+        "example": {
+          "_id": "655bac76c0edc996eca69759",
+          "category": "in good hands",
+          "title": "some title1",
+          "name": "test 1111",
+          "birthday": "2021-10-09T21:00:00.000Z",
+          "type": "dog",
+          "location": "Lviv",
+          "sex": "male",
+          "email": "shutikmax@gmail.com",
+          "comments": "some comment",
+          "owner": "65596d959022e57dcbc10ab8",
+          "createdAt": "2023-11-20T18:59:02.421Z",
+          "updatedAt": "2023-11-20T18:59:02.421Z"
+        }
       }
     },
-
     "securitySchemes": {
       "Bearer": {
         "type": "http",

@@ -5,6 +5,8 @@ const deleteNotice = async (req, res) => {
 
     const notices = await Notice.findOneAndDelete({_id: noticeId, owner: req.user.id})
 
+    if (!notices) return res.status(404).json("Not found");
+
     res.status(200).json(notices);
 }
 

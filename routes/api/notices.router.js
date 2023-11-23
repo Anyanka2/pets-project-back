@@ -4,11 +4,11 @@ const controller = require('../../controllers/notices')
 const wrapper = require('../../helpers/controllerWrappers')
 const auth = require('../../middlewares/authMiddleware')
 
-router.get('/', wrapper(controller.getNotices))
+router.post('/', wrapper(controller.getNotices))
 
 router.get('/:noticeId', wrapper(controller.getNoticeById))
 
-router.post('/', wrapper(auth), wrapper(controller.addNotice))
+router.post('/addNotice', wrapper(auth), wrapper(controller.addNotice))
 
 router.delete('/:noticeId', wrapper(auth), wrapper(controller.deleteNotice))
 
