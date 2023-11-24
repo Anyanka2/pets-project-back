@@ -3,7 +3,7 @@ const User = require("../../models/user")
 
 const getNotices = async (req, res) => {
     const userId = req?.user?.id;
-    const {category, keyword, sex, gt, lt, favorite, own, page = 1, limit = 2} = req.body;
+    const {category, keyword, sex, gt, lt, favorite, own, page = 1, limit = 12} = req.body;
     const offset = (page - 1) * limit;
     let queries = {};
 
