@@ -2,23 +2,25 @@ const Notice = require('../../models/notice')
 
 const addNotice = async (req, res, next) => {
     const {id: owner, email, phone} = req.user;
+    const imageUrl = req.file?.path
 
     const {name, title, birthday, type, comments, category, location, sex, price} =
         req.body;
 
     const resolve = await Notice.create({
+        title,
         name,
         birthday,
         type,
-        category,
-        comments,
-        owner,
         sex,
+        location,
+        category,
+        price,
+        comments,
+        imageUrl,
         phone,
         email,
-        location,
-        title,
-        price
+        owner
     });
 
     res.status(201).json(resolve);
