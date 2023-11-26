@@ -553,7 +553,43 @@
         "tags": [
           "Notices"
         ],
-        "summary": "Add new notice"
+        "summary": "Add new notice",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "notices array",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/addNoticesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getNoticesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
       }
     },
     "/api/notices/{noticeId}": {
@@ -628,7 +664,34 @@
         "tags": [
           "Notices"
         ],
-        "summary": "Add notice to Favorite"
+        "summary": "Add notice to Favorite",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Notice id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
       }
     }
   },
@@ -1417,6 +1480,78 @@
           "owner": "65596d959022e57dcbc10ab8",
           "createdAt": "2023-11-20T18:59:02.421Z",
           "updatedAt": "2023-11-20T18:59:02.421Z"
+        }
+      },
+      "addNoticesRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Notice title",
+            "required": true,
+            "example": "some title"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "required": true,
+            "example": "Barsik"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet's birthday",
+            "format": "date",
+            "required": true,
+            "example": "11.12.2020"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet's type",
+            "required": true,
+            "example": "Sheepdog"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet's sex",
+            "required": true,
+            "example": "male"
+          },
+          "location": {
+            "type": "string",
+            "description": "Pet's location",
+            "example": "Lviv"
+          },
+          "category": {
+            "type": "string",
+            "description": "Notice category",
+            "required": true,
+            "example": "lost/found"
+          },
+          "price": {
+            "type": "number",
+            "description": "Pet's price",
+            "example": 50
+          },
+          "notice_image": {
+            "type": "string",
+            "format": "base64",
+            "description": "Notice image"
+          },
+          "comments": {
+            "type": "string",
+            "required": true,
+            "description": "Comments about your pet ",
+            "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
+          }
+        },
+        "example": {
+          "category": "sell",
+          "keyword": "title1",
+          "gt": 1,
+          "lt": 1,
+          "sex": "male",
+          "page": 1,
+          "limit": 4
         }
       }
     },

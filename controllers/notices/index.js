@@ -7,5 +7,5 @@ module.exports = {
     getNotices,
     getNoticeById,
     addNotice,
-    deleteNotice,
+    deleteNotice
 }
