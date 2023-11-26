@@ -14,7 +14,7 @@ const favoriteNotices = async (req, res) => {
     }
     await User.findByIdAndUpdate(userId, {favoriteNotices})
 
-    res.status(200).json("favorites notices updated");
+    res.status(200).json(favoriteNotices);
 }
 
 module.exports = favoriteNotices
