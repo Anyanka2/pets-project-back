@@ -9,6 +9,8 @@ router.post('/', wrapper(controller.getNotices))
 
 router.get('/:noticeId', wrapper(controller.getNoticeById))
 
+router.get("/", wrapper(controller.getAllNotices));
+
 router.post('/addNotice', wrapper(auth), upload.single('notice_image'), wrapper(controller.addNotice))
 
 router.delete('/:noticeId', wrapper(auth), wrapper(controller.deleteNotice))
