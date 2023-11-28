@@ -2,28 +2,29 @@ const Pets = require("../../models/pet");
 const User = require("../../models/user");
 const mongoose = require("mongoose");
 const addMyPet = async (req, res, next) => {
-  try {
-    const { _id: owner } = req.user;
+    try {
+        const {_id: owner} = req.user;
+        const imageUrl = req.file?.path;
 
-    const { name, birthday, type, comments } = req.body;
+        const {name, birthday, type, comments} = req.body;
 
-    const resolve = await Pets.create({
-      owner,
-      name,
-      birthday,
-      type,
-      comments,
-    });
+        const resolve = await Pets.create({
+            owner,
+            name,
+            birthday,
+            type,
+            comments,
+            imageUrl
+        });
 
-    req.user.pets.push(resolve._id);
-    await User.findByIdAndUpdate(owner, req.user);
- 
+        req.user.pets.push(resolve._id);
+        await User.findByIdAndUpdate(owner, req.user);
 
 
-    return res.status(201).json(resolve);
-  } catch (error) {
-    next(error);
-  }
+        return res.status(201).json(resolve);
+    } catch (error) {
+        next(error);
+    }
 };
 
 module.exports = addMyPet;
