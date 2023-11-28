@@ -5,7 +5,7 @@ const wrapper = require("../../helpers/controllerWrappers");
 const auth = require("../../middlewares/authMiddleware");
 const uploadFile = require("../../middlewares/uploadFiles");
 
-router.post("/pets", wrapper(auth), controllers.addMyPet);
+router.post("/pets", wrapper(auth), uploadFile.single("notice_image"), controllers.addMyPet);
 
 router.put("/pets/:id", wrapper(auth), controllers.updateMyPet);
 
