@@ -4,15 +4,18 @@ const User = require("../../models/user");
 const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
   const user = await User.findOne({ verificationToken });
+  const { VERIFY_HOST } = process.env;
 
   if (!user) {
-    throw requestError(401, "Email not found");
+    return res.status(401).json({ error: "Email not found" });
   }
+
   await User.findByIdAndUpdate(user.id, {
     verify: true,
     verificationToken: "",
   });
-  res.json({ message: "Email verify success" });
+
+  res.redirect(`${VERIFY_HOST}/verify`);
 };
 
 module.exports = verifyEmail;
