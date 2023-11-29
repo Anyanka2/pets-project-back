@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const favoriteNotices = async (req, res) => {
     const {noticeId} = req.params;
-    const userId = req.user.id
+    const userId = req.user._id
 
     const favoriteNotices = req.user.favoriteNotices
     console.log(favoriteNotices)
