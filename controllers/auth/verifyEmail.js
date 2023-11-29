@@ -15,7 +15,7 @@ const verifyEmail = async (req, res) => {
     verificationToken: "",
   });
 
-  res.redirect(`${VERIFY_HOST}/verify`);
+  res.redirect(`${VERIFY_HOST}/pets-project-front/verify`);
 };
 
 module.exports = verifyEmail;
