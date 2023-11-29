@@ -4,7 +4,6 @@ const User = require("../../models/user");
 const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
   const user = await User.findOne({ verificationToken });
-  const { VERIFY_HOST } = process.env;
 
   if (!user) {
     return res.status(401).json({ error: "Email not found" });
@@ -15,7 +14,7 @@ const verifyEmail = async (req, res) => {
     verificationToken: "",
   });
 
-  res.redirect(`${VERIFY_HOST}/pets-project-front/verify`);
+  res.redirect("https://anyanka2.github.io/pets-project-front/verify");
 };
 
 module.exports = verifyEmail;
