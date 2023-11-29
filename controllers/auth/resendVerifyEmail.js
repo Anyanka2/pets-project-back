@@ -3,7 +3,7 @@ const sendEmail = require("../../helpers/sendEmail");
 const User = require("../../models/user");
 
 const resendVerifyEmail = async (req, res) => {
-  const { email, name } = req.body;
+  const { email,name } = req.body;
   const user = await User.findOne({ email });
   const { VERIFY_HOST } = process.env;
   if (!user) {
