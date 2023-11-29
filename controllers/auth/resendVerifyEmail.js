@@ -16,8 +16,7 @@ const resendVerifyEmail = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `
-    <div style="background-color: #f5f5f5; padding: 20px;">
+    html: `<div style="background-color: #f5f5f5; padding: 20px;">
     <h2>Email Verification</h2>
     <p>Dear User,</p>
     <p>
@@ -39,8 +38,7 @@ const resendVerifyEmail = async (req, res) => {
     <p>Thank you,</p>
     <p>Your Company Name</p>
   </div>
-    <a target="_blank" href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" >Click verify email</a>
-    `,
+    <a target="_blank" href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
   };
   await sendEmail(verifyEmail);
   res.json({
