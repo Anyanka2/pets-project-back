@@ -34,23 +34,14 @@ const registration = async (req, res, next) => {
     <p>
       Thank you for signing up! To complete your registration, please click the button below to verify your email address:
     </p>
-    <a href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+    <a href="https://anyanka2.github.io/pets-project-front/verify" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
       Verify Email
     </a>
-    <p>
-      If you're having trouble clicking the button, you can also copy and paste the following URL into your browser's address bar:
-      <br>
-      <a href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" style="word-break: break-all;">
-        ${VERIFY_HOST}/api/auth/verify/${user.verificationToken}
-      </a>
-    </p>
-    <p>
-      This link will expire in 24 hours for security reasons. If you didn't sign up for our service, please ignore this email.
-    </p>
+
     <p>Thank you,</p>
-    <p>Your Company Name</p>
+    <p>Like Pets</p>
   </div>
-    <a target="_blank" href="${VERIFY_HOST}/api/auth/verify/${user.verificationToken}" >Click verify email</a>`,
+    `,
   };
   await sendEmail(verifyEmail);
 

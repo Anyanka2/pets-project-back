@@ -6,15 +6,13 @@ const verifyEmail = async (req, res) => {
   const user = await User.findOne({ verificationToken });
 
   if (!user) {
-    return res.status(401).json({ error: "Email not found" });
+    throw requestError(401, "Email not found");
   }
-
   await User.findByIdAndUpdate(user.id, {
     verify: true,
     verificationToken: "",
   });
-
-  res.redirect("https://anyanka2.github.io/pets-project-front/verify");
+  res.json({ message: "Email verify success" });
 };
 
 module.exports = verifyEmail;
