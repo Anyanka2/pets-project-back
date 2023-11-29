@@ -34,7 +34,7 @@ const registration = async (req, res, next) => {
     <p>
       Thank you for signing up! To complete your registration, please click the button below to verify your email address:
     </p>
-    <a href="https://anyanka2.github.io/pets-project-front/verify/${user.verificationToken}" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+    <a href="https://anyanka2.github.io/pets-project-front/verify/${verificationToken}" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
       Verify Email
     </a>
 
