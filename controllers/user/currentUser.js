@@ -30,6 +30,8 @@ const currentUserWithPets = async (req, res, next) => {
                     birthday: 1,
                     city: 1,
                     avatarURL: 1,
+                    verify:1,
+                    favoriteNotices: 1,
                     "petsData._id": 1,
                     "petsData.name": 1,
                     "petsData.birthday": 1,
