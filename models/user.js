@@ -18,7 +18,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      default: path.join(__dirname, "/public/avatar/default_avatar.png"),
+      default: "",
     },
     birthday: {
       type: String,
