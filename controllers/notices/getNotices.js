@@ -1,5 +1,5 @@
 const Notice = require('../../models/notice')
-const User = require("../../models/user")
+const dateToUnix = require("../../helpers/dateToUnix");
 
 const getNotices = async (req, res) => {
     const userId = req?.user?.id;
@@ -11,6 +11,7 @@ const getNotices = async (req, res) => {
         const period = gt || lt
         let date = new Date()
         date.setFullYear((date.getFullYear() - period))
+        date = dateToUnix(date)
 
         if (gt) queries.birthday = {$lt: date}
         if (lt) queries.birthday = {$gt: date}
@@ -29,7 +30,6 @@ const getNotices = async (req, res) => {
 
     const notices = await Notice.find(queries).sort('-createdAt').exec();
 
-    console.log(notices)
     if (!notices || notices.length === 0) return res.status(404).json("Not found");
 
     const totalNotices = notices.length;
