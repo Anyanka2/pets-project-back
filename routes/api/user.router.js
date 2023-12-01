@@ -17,6 +17,10 @@ router.put("/current", wrapper(auth), controllers.updateInfoCurrentUser);
 
 router.patch("/avatar", wrapper(auth), uploadFile.single("user_avatar"), controllers.uploadImage);
 
-router.patch("/favoriteNotices/:noticeId", wrapper(auth), controllers.favoriteNotices);
+router.post(
+  "/favoriteNotices/:noticeId",
+  wrapper(auth),
+  controllers.favoriteNotices
+);
 
 module.exports = router;
