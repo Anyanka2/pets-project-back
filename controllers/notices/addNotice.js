@@ -1,6 +1,7 @@
 const Notice = require('../../models/notice');
 const noticeSchema = require('../../schemas/noticeSchema')
 const requestError = require("../../helpers/requestError");
+const dateToUnix = require('../../helpers/dateToUnix')
 
 const addNotice = async (req, res, next) => {
     const {id: owner, email, phone} = req.user;
@@ -25,10 +26,11 @@ const addNotice = async (req, res, next) => {
     })
     if (error) throw requestError(400, error);
 
+    const birthdayUnix = dateToUnix(birthday);
     const resolve = await Notice.create({
         title,
         name,
-        birthday,
+        birthday: birthdayUnix,
         type,
         sex,
         location,

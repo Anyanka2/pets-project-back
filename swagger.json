@@ -240,7 +240,7 @@
         }
       }
     },
-    "/api/user/pets": {
+    "/api/users/pets": {
       "post": {
         "tags": [
           "User"
@@ -281,7 +281,7 @@
         }
       }
     },
-    "api/user/pets/{id}": {
+    "/api/users/pets/{id}": {
       "put": {
         "tags": [
           "User"
@@ -366,7 +366,7 @@
         }
       }
     },
-    "api/user/current": {
+    "/api/users/current": {
       "get": {
         "tags": [
           "User"
@@ -435,25 +435,32 @@
         }
       }
     },
-    "api/user/avatar": {
+    "/api/users/avatar": {
       "patch": {
         "tags": [
           "User"
         ],
-        "summary": "Update avatar user",
-        "parameters": [],
+        "summary": "Update user's avatar",
         "security": [
           {
             "Bearer": []
           }
         ],
+        "requestBody": {
+          "description": "user's avatar",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/userAvatarRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "content": {
-              "application/json": {
-              }
-            }
+            "content": {}
           },
           "401": {
             "description": "Not authorized",
@@ -509,11 +516,33 @@
       }
     },
     "/api/notices": {
-      "post": {
+      "get": {
         "tags": [
           "Notices"
         ],
         "summary": "Get notices",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getNoticesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notices"
+        ],
+        "summary": "Get notices (with filters)",
         "parameters": [],
         "requestBody": {
           "description": "notices array",
@@ -665,6 +694,7 @@
           "Notices"
         ],
         "summary": "Add notice to Favorite",
+        "description": "Checks if {noticeId} is in array of favorite notices of the user. If it is - {noticeId} will be removed, and if not - {noticeId} will be added.",
         "security": [
           {
             "Bearer": []
@@ -1543,15 +1573,16 @@
             "description": "Comments about your pet ",
             "example": "Jack is a handsome Basenji with short, shiny red fur and perky ears. He's an active and intelligent dog that loves to explore and play. Jack is independent and strong-willed, but also affectionate and loyal to his family. He's a curious and energetic companion that brings joy and adventure to his family's life."
           }
-        },
-        "example": {
-          "category": "sell",
-          "keyword": "title1",
-          "gt": 1,
-          "lt": 1,
-          "sex": "male",
-          "page": 1,
-          "limit": 4
+        }
+      },
+      "userAvatarRequest": {
+        "type": "object",
+        "properties": {
+          "user_avatar": {
+            "type": "string",
+            "format": "base64",
+            "description": "User avatar"
+          }
         }
       }
     },

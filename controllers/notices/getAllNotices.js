@@ -2,7 +2,7 @@ const Notices = require("../../models/notice");
 
 
 const getAllNotices = async (req, res, next) => {
-  
+
   const offset = parseInt(req.query.offset) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const petTitle = req.query.title || ".*";
@@ -15,16 +15,18 @@ const getAllNotices = async (req, res, next) => {
                           .limit(limit)
                           .exec();
 
-    return res.status(200).json({status: "ok",
-                                 code: 200,
-                                 data:{
-                                  resourses,
-                                  total,
-                                  totalPages
-                                 }});
-  } catch (error) {
-    next(error);
-  }
+        return res.status(200).json({
+            status: "ok",
+            code: 200,
+            data: {
+                resources,
+                total,
+                totalPages
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
 module.exports = getAllNotices;
