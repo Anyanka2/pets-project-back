@@ -10,7 +10,7 @@ const getAllNotices = async (req, res, next) => {
   try {
     const total = await Notices.find({title: {$regex: petTitle, $options: `i`}, owner: {$regex: ownerId}}).countDocuments();
     const totalPages = Math.ceil(total / limit);
-    const resourses = await Notices.find({title: {$regex: petTitle, $options: `i`}})
+    const resources = await Notices.find({title: {$regex: petTitle, $options: `i`}})
                           .skip((offset - 1) * limit)
                           .limit(limit)
                           .exec();
