@@ -10,6 +10,7 @@ const authRouter = require("./routes/api/auth");
 const userRouter = require("./routes/api/user.router");
 const noticesRouter = require("./routes/api/notices.router")
 const newsRouter = require("./routes/api/news.router");
+const friendsRouter = require("./routes/api/friends.router");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/notices", noticesRouter);
 app.use("/api/news", newsRouter);
+app.use("/api/friends", friendsRouter);
 
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
