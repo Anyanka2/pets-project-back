@@ -4,8 +4,8 @@ const friendsJoiSchema = joi.object({
   title: joi.string().required(),
   url: joi.string().optional(),
   addressUrl: joi.string().optional().allow(null),
-  imageUrl: joi.string(),
-  address: joi.string().required(),
+  imageUrl: joi.string().allow(null),
+  address: joi.string().allow(null).required(),
   workDays: joi.array().items(joi.object()).allow(null),
   phone: joi.string().allow(null),
   email: joi

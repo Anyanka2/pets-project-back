@@ -34,4 +34,4 @@ const friendsSchema = new Schema(
 );
 const Friends = model("friends", friendsSchema);
 
-module.export = Friends;
+module.exports = Friends;
