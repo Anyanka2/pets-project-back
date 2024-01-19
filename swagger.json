@@ -9,12 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "servers": [
     {
       "url": "https://pet-web-server.onrender.com"
@@ -44,9 +40,7 @@
   "paths": {
     "/api/auth/registration": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -84,9 +78,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User login",
         "parameters": [],
         "requestBody": {
@@ -124,9 +116,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User logout",
         "parameters": [],
         "security": [
@@ -165,9 +155,7 @@
     },
     "/api/auth/verify/:verificationToken": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Verification User",
         "parameters": [
           {
@@ -202,9 +190,7 @@
     },
     "/api/auth/verify": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "resend verify email user",
         "parameters": [],
         "requestBody": {
@@ -242,9 +228,7 @@
     },
     "/api/users/pets": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Add your pet",
         "parameters": [],
         "security": [
@@ -283,9 +267,7 @@
     },
     "/api/users/pets/{id}": {
       "put": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "update info about my pet",
         "parameters": [
           {
@@ -330,9 +312,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "delete pet by id",
         "parameters": [
           {
@@ -368,9 +348,7 @@
     },
     "/api/users/current": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get info current user",
         "parameters": [],
         "security": [
@@ -396,9 +374,7 @@
         }
       },
       "put": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update info current user",
         "parameters": [],
         "security": [
@@ -437,9 +413,7 @@
     },
     "/api/users/avatar": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update user's avatar",
         "security": [
           {
@@ -471,9 +445,7 @@
     },
     "/api/news?offset=3&limit=25": {
       "get": {
-        "tags": [
-          "Other"
-        ],
+        "tags": ["Other"],
         "summary": "Return list of news about pets",
         "parameters": [
           {
@@ -515,11 +487,31 @@
         }
       }
     },
+    "/api/friends/getAllFriends": {
+      "get": {
+        "tags": ["Other"],
+        "summary": "Return list of project sponsors",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getAllFriendsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/api/notices": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get notices",
         "responses": {
           "200": {
@@ -539,9 +531,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get notices (with filters)",
         "parameters": [],
         "requestBody": {
@@ -579,9 +569,7 @@
     },
     "/api/notices/addNotice": {
       "post": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Add new notice",
         "security": [
           {
@@ -623,9 +611,7 @@
     },
     "/api/notices/{noticeId}": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get info about notice by id",
         "parameters": [
           {
@@ -654,9 +640,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Delete notice by id",
         "security": [
           {
@@ -690,9 +674,7 @@
     },
     "/api/users/favoriteNotices/{noticeId}": {
       "patch": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Add notice to Favorite",
         "description": "Checks if {noticeId} is in array of favorite notices of the user. If it is - {noticeId} will be removed, and if not - {noticeId} will be added.",
         "security": [
@@ -729,11 +711,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -776,10 +754,7 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -823,9 +798,7 @@
       },
       "resendVerifyRequest": {
         "type": "object",
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "properties": {
           "email": {
             "type": "string",
@@ -844,12 +817,7 @@
       },
       "addPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments"
-        ],
+        "required": ["name", "birthday", "type", "comments"],
         "properties": {
           "name": {
             "type": "string",
@@ -877,12 +845,7 @@
       },
       "addPetResponse": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments"
-        ],
+        "required": ["name", "birthday", "type", "comments"],
         "properties": {
           "id": {
             "type": "string",
@@ -967,12 +930,7 @@
       },
       "updateInfoPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "birthday",
-          "type",
-          "comments"
-        ],
+        "required": ["name", "birthday", "type", "comments"],
         "properties": {
           "name": {
             "type": "string",
@@ -1375,6 +1333,73 @@
             "total": 1151,
             "totalPages": 116
           }
+        }
+      },
+      "getAllFriendsResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Sponsor's name",
+            "example": "some title"
+          },
+          "url": {
+            "type": "string",
+            "description": "Sponsor's url",
+            "example": "some url"
+          },
+          "addressUrl": {
+            "type": "string",
+            "description": "Sponsor's location",
+            "example": "google maps location"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Sponsor's logo",
+            "example": "some image"
+          },
+          "address": {
+            "type": "string",
+            "description": "Sponsor's logo",
+            "example": "some image"
+          },
+          "workDays": {
+            "type": "array",
+            "description": "work days list",
+            "example": "is open: from to"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Sponsor's phone",
+            "format": "number",
+            "example": "+380931934069"
+          },
+          "email": {
+            "type": "string",
+            "description": "Sponsor's email",
+            "format": "email",
+            "example": "godrik999@gmail.com"
+          }
+        },
+        "example": {
+          "title": "Pets shop",
+          "url": "https://cat.com.ua",
+          "addressUrl": "https://goo.gl/maps/iq8NXEUf31EAQCjiiu",
+          "imageUrl": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/287.png",
+          "address": "Lviv, Franka 6",
+          "workDays": [
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" },
+            { "isOpen": true, "from": "09:00", "to": "17:00" }
+          ],
+          "phone": "+380931934067",
+          "email": "cats@gmail.com",
+          "createdAt": "2023-11-20T18:59:02.421Z",
+          "updatedAt": "2023-11-20T18:59:02.421Z"
         }
       },
       "getNoticesRequest": {
