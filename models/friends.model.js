@@ -10,21 +10,27 @@ const friendsSchema = new Schema(
         },
         addressUrl: {
             type: String,
+            default: null,
         },
         imageUrl: {
             type: String,
+            default: null,
         },
         address: {
             type: String,
+            default: "website only",
         },
         workDays: {
             type: [],
+            default: "day and night",
         },
         phone: {
             type: String,
+            default: "email only",
         },
         email: {
             type: String,
+            default: "not available",
         },
     },
     {
