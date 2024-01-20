@@ -50,6 +50,7 @@ const userSchema = new Schema(
     ],
     permissionLevel: {
       type: String,
+      enum: ['user', 'admin', 'manager', 'moderator'],
       default: "user",
     }
   },
