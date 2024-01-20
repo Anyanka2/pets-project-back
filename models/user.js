@@ -47,7 +47,11 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "pet",
       },
-    ]
+    ],
+    permissionLevel: {
+      type: String,
+      default: "user",
+    }
   },
   {
     timestamps: true,
