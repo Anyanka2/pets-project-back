@@ -1,7 +1,7 @@
 
 
 
-## Docerize deploy on VPS
+## Dockerization of the application
 
 ```bash 
 # go to directory with dockerfile and dotenv files. For example: 
