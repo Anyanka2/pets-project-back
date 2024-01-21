@@ -13,12 +13,14 @@ async function addNews (req, res, next) {
         if (error) { 
             next(requestError(400, error.message));
             //res.status(400).json(error.message);
+            return;
         } else {
             NewsModel.create(value);
             res.status(200).json({"message": value});
         }
-    }
+    } else {
     next(requestError(401));
+    }
 }
 
 module.exports = addNews;
