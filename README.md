@@ -1,4 +1,24 @@
 
+## About
+
+This repo bla-bla-bla... 
+
+
+## Used technologies
+
+* Node.js
+* Express.js
+* Mongoose
+* MongoDB
+* Joi
+* ...
+
+## Adresses and versions
+
+
+1. Render.com: https://pet-web-server.onrender.com/api/docs
+1. Self-hosted version: https://your-pets-back.awake.tools/api/docs (current)
+
 
 
 ## Note for deployment on VPS
@@ -105,6 +125,7 @@ fi
 Description=Check your-pets-back GitHub repo and update docker container
 
 [Service]
+#Environment="YOUR_PETS_BACK_DIR=/path/to/dir"
 ExecStart=your-pets-check-repo.sh
 
 ```
