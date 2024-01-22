@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
     if (message.includes("ENOENT")) {
         message = "Server Error";
     }
-    console.log(err.code);
+    
     res.status(status).json({message});
 });
 

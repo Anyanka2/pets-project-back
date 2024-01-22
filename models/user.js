@@ -47,7 +47,12 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "pet",
       },
-    ]
+    ],
+    permissionLevel: {
+      type: String,
+      enum: ['user', 'admin', 'manager', 'moderator'],
+      default: "user",
+    }
   },
   {
     timestamps: true,
