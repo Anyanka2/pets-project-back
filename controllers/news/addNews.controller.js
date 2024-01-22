@@ -15,8 +15,9 @@ async function addNews (req, res, next) {
             //res.status(400).json(error.message);
             return;
         } else {
-            NewsModel.create(value);
-            res.status(200).json({"message": value});
+            const newNews = await NewsModel.create(value);
+            
+            res.status(200).json({"message": newNews._id});
         }
     } else {
     next(requestError(401));
