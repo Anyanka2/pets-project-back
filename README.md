@@ -1,7 +1,47 @@
 
+## About
+
+This repo bla-bla-bla... 
 
 
-## Docerize deploy on VPS
+## Used technologies
+
+* Node.js
+* Express.js
+* Mongoose
+* MongoDB
+* Joi
+* ...
+
+## Adresses and versions
+
+
+1. Render.com: https://pet-web-server.onrender.com/api/docs
+1. Self-hosted version: https://your-pets-back.awake.tools/api/docs (current)
+
+
+
+## Note for deployment on VPS
+
+### Dockerization of the application
+
+#### Dockerfile
+
+```dockerfile
+FROM node:18.18-buster
+
+WORKDIR /app
+
+RUN git clone https://github.com/Anyanka2/pets-project-back.git .
+COPY .env .env
+EXPOSE 3030
+
+RUN npm install
+
+CMD ["npm", "start"] 
+
+```
+#### Manual start
 
 ```bash 
 # go to directory with dockerfile and dotenv files. For example: 
@@ -12,12 +52,12 @@ docker build . -t your-pets-back:01.06.02
 
 # in tag ":01.06.02" equal month.day.attempt
 # then run docker app
+docker run -p 3030:3030 --name your-pets-back your-pets-back:01.06.02
 
-docker run -p 2004:3030 --name your-pets-back your-pets-back:01.06.02
-
-
-# docker stop your-pets-back
-# docker container rm your-pets-back
+# for stop container
+docker stop your-pets-back
+# for remove container
+docker container rm your-pets-back
 ```
 
 
@@ -47,13 +87,64 @@ fi
 echo "list existing image tag"
 docker images | grep your-pets-back
 
-#read -p "enter tag-name like \"01.06.02\" equal month.day.attempt: " tagname
 tagname=$(date +%m.%d.%S)
-echo "entered tagname: $tagname"
 echo "Building Docker image with tag $tagname..."
-docker build . --no-cache -t your-pets-back:$tagname
+docker build  $YOUR_PETS_BACK_DIR --no-cache -t your-pets-back:$tagname -f "$YOUR_PETS_BACK_DIR/dockerfile" 
 echo "Running Docker container with tag $tagname..."
 docker run -d -p 2004:3030 --name your-pets-back your-pets-back:$tagname
 exit 0
+```
+
+### Скрипт перевірки, чи не оновився main репозиторію
+
+```bash
+#!/bin/bash
+
+current_hash=$(curl -sL "Accept: application/vnd.github.v3+json"  https://api.github.com/repos/Anyanka2/pets-project-back/commits/main | jq '.sha')
+cd $YOUR_PETS_BACK_DIR
+known_hash=$(cat your-pets-repo-hash.conf)
+echo "Current hash: $current_hash "
+echo "Known hash: $known_hash "
+
+if [[ $current_hash == $known_hash ]]; then
+        echo "Nothing to do"
+        exit 0
+else
+        echo "hmmm.... hash is different"
+        ./your-pets-back-restart.sh;
+        echo $current_hash > your-pets-repo-hash.conf
+        exit 0
+fi
 
 ```
+
+### Systemd Unit file
+
+```bash
+[Unit]
+Description=Check your-pets-back GitHub repo and update docker container
+
+[Service]
+#Environment="YOUR_PETS_BACK_DIR=/path/to/dir"
+ExecStart=your-pets-check-repo.sh
+
+```
+
+### Systemd Timer file
+
+```bash
+[Unit]
+Description=Check repo Your pets back 
+
+[Timer]
+Unit=your-pets-back.service
+OnBootSec=15m
+OnUnitActiveSec=15m
+
+
+[Install]
+WantedBy=timers.target
+
+```
+
+both systemd file located in `/etc/systemd/system` directory.
